@@ -1,0 +1,11 @@
+# Create requirements.txt
+echo fastapi==0.104.1 > requirements.txt
+echo uvicorn[standard]==0.24.0 >> requirements.txt
+echo pydantic==2.5.0 >> requirements.txt
+echo python-dotenv==1.0.0 >> requirements.txt
+echo langchain==0.1.0 >> requirements.txt
+echo langchain-community==0.0.10 >> requirements.txt
+echo sentence-transformers==2.2.2 >> requirements.txt
+echo faiss-cpu==1.7.4 >> requirements.txt
+echo groq==0.4.2 >> requirements.txt
+echo requests==2.31.0 >> requirements.txt
