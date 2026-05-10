@@ -12,19 +12,19 @@ from app.core.config import settings
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Lifespan manager for startup/shutdown events"""
-    print("🚀 Starting up SHL Assessment Recommender...")
+    print("[START] Starting up SHL Assessment Recommender...")
     
     # Initialize vector store on startup
     try:
         get_vectorstore()
-        print("✅ Vector store initialized successfully")
+        print("[OK] Vector store initialized successfully")
     except Exception as e:
-        print(f"⚠️ Vector store initialization warning: {e}")
+        print(f"[!] Vector store initialization warning: {e}")
         print("   Will retry on first search request")
     
     yield
     
-    print("👋 Shutting down...")
+    print("[STOP] Shutting down...")
 
 
 # Create FastAPI app

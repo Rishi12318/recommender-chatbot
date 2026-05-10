@@ -19,37 +19,37 @@ class LLMClient:
             if self.provider == "groq":
                 from groq import Groq
                 if not settings.GROQ_API_KEY:
-                    print("⚠️ GROQ_API_KEY not set. Running in mock mode.")
+                    print("[!] GROQ_API_KEY not set. Running in mock mode.")
                     return
                 self.client = Groq(api_key=settings.GROQ_API_KEY)
-                print(f"✅ Initialized Groq client with model: {self.model}")
+                print(f"[OK] Initialized Groq client with model: {self.model}")
                 
             elif self.provider == "gemini":
                 import google.generativeai as genai
                 if not settings.GEMINI_API_KEY:
-                    print("⚠️ GEMINI_API_KEY not set. Running in mock mode.")
+                    print("[!] GEMINI_API_KEY not set. Running in mock mode.")
                     return
                 genai.configure(api_key=settings.GEMINI_API_KEY)
                 self.client = genai.GenerativeModel(self.model)
-                print(f"✅ Initialized Gemini client with model: {self.model}")
+                print(f"[OK] Initialized Gemini client with model: {self.model}")
                 
             elif self.provider == "openai":
                 from openai import OpenAI
                 if not settings.OPENAI_API_KEY:
-                    print("⚠️ OPENAI_API_KEY not set. Running in mock mode.")
+                    print("[!] OPENAI_API_KEY not set. Running in mock mode.")
                     return
                 self.client = OpenAI(api_key=settings.OPENAI_API_KEY)
-                print(f"✅ Initialized OpenAI client with model: {self.model}")
+                print(f"[OK] Initialized OpenAI client with model: {self.model}")
             else:
-                print(f"⚠️ Unknown provider: {self.provider}, using mock client")
+                print(f"[!] Unknown provider: {self.provider}, using mock client")
                 self.client = None
                 
         except ImportError as e:
-            print(f"⚠️ Could not import {self.provider} library: {e}")
+            print(f"[!] Could not import {self.provider} library: {e}")
             print("   Install with: pip install groq (or google-generativeai, openai)")
             self.client = None
         except Exception as e:
-            print(f"⚠️ Failed to initialize {self.provider}: {e}")
+            print(f"[!] Failed to initialize {self.provider}: {e}")
             self.client = None
     
     def chat(self, messages: List[Dict[str, str]], temperature: float = 0.7) -> str:
@@ -83,7 +83,7 @@ class LLMClient:
                 return response.choices[0].message.content
             
         except Exception as e:
-            print(f"❌ LLM API error: {e}")
+            print(f"[ERR] LLM API error: {e}")
             return self._mock_response(messages)
     
     def _mock_response(self, messages: List[Dict[str, str]]) -> str:

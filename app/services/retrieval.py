@@ -40,15 +40,15 @@ class AssessmentVectorStore:
 
         if self.fallback_mode:
             self._load_catalog_only()
-            print("⚠️ Advanced retrieval unavailable, using lightweight fallback search")
+            print("[!] Advanced retrieval unavailable, using lightweight fallback search")
             return
         
-        print(f"🔄 Loading embedding model: {self.embedding_model_name}")
+        print(f"[...] Loading embedding model: {self.embedding_model_name}")
         try:
             self.model = SentenceTransformer(self.embedding_model_name)
-            print("✅ Embedding model loaded")
+            print("[OK] Embedding model loaded")
         except Exception as e:
-            print(f"❌ Failed to load embeddings: {e}")
+            print(f"[ERR] Failed to load embeddings: {e}")
             raise
         
         # Try to load existing index
@@ -97,7 +97,7 @@ class AssessmentVectorStore:
         
         # Save
         self._save_index()
-        print(f"✅ Created FAISS index with {len(self.assessments)} vectors")
+        print(f"[OK] Created FAISS index with {len(self.assessments)} vectors")
     
     def _format_assessment_text(self, item: Dict) -> str:
         """Format assessment as searchable text"""
@@ -146,7 +146,7 @@ Adaptive: {item.get('adaptive', 'Unknown')}
         with open(self.vectorstore_path / "metadata.json", "r", encoding="utf-8") as f:
             self.assessments = json.load(f)
         
-        print(f"✅ Loaded index with {len(self.assessments)} assessments")
+        print(f"[OK] Loaded index with {len(self.assessments)} assessments")
     
     def search(self, query: str, k: int = 10) -> List[Dict[str, Any]]:
         """Search for similar assessments"""
